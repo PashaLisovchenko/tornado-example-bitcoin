@@ -41,7 +41,6 @@ class MyFormHandler(tornado.web.RequestHandler):
         self.render("templates/create_order.html")
 
     async def post(self):
-        self.set_header("Content-Type", "text/plain")
         id_order = await tornado.gen.Task(db.get, "id_order")
         db.hmset('orders:%s' % str(id_order),
                  {"id": str(id_order),
@@ -61,4 +60,9 @@ class GetOrderById(tornado.web.RequestHandler):
 
     async def get(self, pk):
         order = await tornado.gen.Task(db.hgetall, 'orders:%s' % str(pk))
-        self.render("templates/orders.html", order=order)
+        if len(order.keys()) > 0:
+            self.render("templates/orders.html", order=order)
+        else:
+            self.set_header("Content-Type", "text/plain")
+            self.write("It's order don't find")
+
