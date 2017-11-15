@@ -9,6 +9,9 @@ from main import db
 
 class MainHandler(tornado.web.RequestHandler):
 
+    def data_received(self, chunk):
+        pass
+
     async def get(self):
 
         last_id_order = await tornado.gen.Task(db.get, "id_order")
@@ -31,6 +34,9 @@ class MainHandler(tornado.web.RequestHandler):
 
 class MyFormHandler(tornado.web.RequestHandler):
 
+    def data_received(self, chunk):
+        pass
+
     def get(self):
         self.render("templates/create_order.html")
 
@@ -46,3 +52,13 @@ class MyFormHandler(tornado.web.RequestHandler):
                   })
         db.incr("id_order")
         self.redirect('/')
+
+
+class GetOrderById(tornado.web.RequestHandler):
+
+    def data_received(self, chunk):
+        pass
+
+    async def get(self, pk):
+        order = await tornado.gen.Task(db.hgetall, 'orders:%s' % str(pk))
+        self.render("templates/orders.html", order=order)
