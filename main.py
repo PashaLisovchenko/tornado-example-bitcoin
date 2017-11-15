@@ -3,7 +3,9 @@ import tornado.web
 import tornadoredis
 import urls
 
-db = tornadoredis.Client()
+
+POOL = tornadoredis.ConnectionPool(host='127.0.0.1', port=6379)
+db = tornadoredis.Client(connection_pool=POOL)
 db.connect()
 
 if __name__ == "__main__":

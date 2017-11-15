@@ -5,15 +5,36 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>{{current}}</title>
 </head>
 <body style="font-family: 'Ubuntu Light'">
-
+<div class="info" style="float: left; width: 30%">
     {%if redis %}
         <div class="help-text" style="color: crimson; font-size: 10px">
             <p>{{redis}}</p>
         </div>
     {% end %}
     <p>Current bitcoin rate: {{current}} <sup>$</sup></p>
+    <a href="http://127.0.0.1:8000/order">Оставить заказ</a>
+</div>
+<div class="table" style="float: right; width: 70%">
+    <table border="1">
+        <caption>Таблица биржи</caption>
+            <tr>
+                <th>Id</th>
+                <th>Тип заказа</th>
+                <th>Цена</th>
+                <th>Количество</th>
+            </tr>
+            {% for order in orders %}
+                <tr>
+                    <td>{{ order["id"] }}</td>
+                    <td>{{ order["type"] }}</td>
+                    <td>{{ order["price"] }}</td>
+                    <td>{{ order["quantity"] }}</td>
+                </tr>
+            {% end %}
+    </table>
+</div>
 </body>
 </html>
