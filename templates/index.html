@@ -17,7 +17,11 @@
     <p>Current bitcoin rate: {{current}} <sup>$</sup></p>
     <a href="http://127.0.0.1:8000/order/">Оставить заказ</a>
 </div>
+
 <div class="table" style="float: right; width: 70%">
+    <form action="" method="POST" style="float: right; width: 70%;">
+        <input type="submit" value="Update" />
+    </form>
     <table border="1">
         <caption>Таблица биржи</caption>
             <tr>
@@ -36,5 +40,6 @@
             {% end %}
     </table>
 </div>
+
 </body>
 </html>
